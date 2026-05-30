@@ -25,6 +25,78 @@
  */
 
 #include "perturbations.h"
+
+/* BEGIN UTIS mu(k,a) helper */
+/**
+ * CLASS-safe UTIS effective gravitational response.
+ *
+ * This helper is intentionally not called in C2.1a.
+ * It only verifies that perturbations.c can compile with pba->utis_* fields.
+ *
+ * Formula:
+ * G(a) = 0.5 * [1 + tanh((ln a - ln a0)/width)]
+ * S(a) = S0 * a^p * G(a)
+ * mu(k,a) = 1 - S(a) * k^2/(k^2 + kc^2)
+ */
+static inline double __attribute__((unused)) utis_mu_of_k_a(
+                         struct background * pba,
+                         double k,
+                         double a
+                         ) {
+
+  double gate;
+  double S;
+  double mu;
+  double k2;
+  double kc2;
+  double width;
+  double a0;
+  double a_p;
+
+  if (pba->has_utis == _FALSE_)
+    return 1.0;
+
+  if (pba->utis_S0 == 0.0)
+    return 1.0;
+
+  if (a <= 0.0)
+    return 1.0;
+
+  a0 = pba->utis_a0;
+  width = pba->utis_width;
+
+  if (a0 <= 0.0)
+    return 1.0;
+
+  if (width <= 0.0)
+    width = 1.0e-6;
+
+  gate = 0.5 * (1.0 + tanh((log(a) - log(a0)) / width));
+
+  if (gate < 0.0)
+    gate = 0.0;
+
+  if (gate > 1.0)
+    gate = 1.0;
+
+  /* Fast-path optimization to avoid heavy pow() when p=1.0 */
+  a_p = (pba->utis_p == 1.0) ? a : pow(a, pba->utis_p);
+  S = pba->utis_S0 * a_p * gate;
+
+  k2 = k*k;
+  kc2 = pba->utis_kc * pba->utis_kc;
+
+  if (kc2 <= 0.0)
+    return 1.0;
+
+  mu = 1.0 - S * k2/(k2 + kc2);
+
+  if (mu <= 0.0)
+    mu = 1.0e-6;
+
+  return mu;
+}
+/* END UTIS mu(k,a) helper */
 #include "parallel.h"
 
 
