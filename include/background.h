@@ -322,6 +322,39 @@ struct background
 
   short background_verbose; /**< flag regulating the amount of information sent to standard output (none if set to zero) */
 
+
+  /* BEGIN UTIS effective layer parameters */
+  /** Switch for UTIS CLASS-safe effective layer. */
+  short has_utis;
+
+  /** UTIS late-time mass-geometry growth correction amplitude. */
+  double utis_S0;
+
+  /** UTIS scale-factor power in S(a)=S0*a^p. */
+  double utis_p;
+
+  /** UTIS transition scale kc for mu(k,a). */
+  double utis_kc;
+
+  /** UTIS smooth activation center in scale factor. */
+  double utis_a0;
+
+  /** UTIS smooth activation width in log(a). */
+  double utis_width;
+
+  /** UTIS primordial feature amplitude. */
+  double utis_Afeat;
+
+  /** UTIS log-k primordial feature frequency. */
+  double utis_omega_log;
+
+  /** UTIS log-k primordial feature phase. */
+  double utis_phi_log;
+
+  /** UTIS high-k damping scale for primordial feature. */
+  double utis_kdamp;
+  /* END UTIS effective layer parameters */
+
   ErrorMsg error_message; /**< zone for writing error messages */
 
   short is_allocated; /**< flag is set to true if allocated */

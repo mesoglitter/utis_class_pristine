@@ -1732,7 +1732,26 @@ int input_read_parameters(struct file_content * pfc,
              errmsg,
              errmsg);
 
-  return _SUCCESS_;
+  
+  /* BEGIN UTIS effective layer input read */
+  class_read_flag("has_utis",pba->has_utis);
+
+  if (pba->has_utis == _TRUE_) {
+
+    class_read_double("utis_S0",pba->utis_S0);
+    class_read_double("utis_p",pba->utis_p);
+    class_read_double("utis_kc",pba->utis_kc);
+    class_read_double("utis_a0",pba->utis_a0);
+    class_read_double("utis_width",pba->utis_width);
+
+    class_read_double("utis_Afeat",pba->utis_Afeat);
+    class_read_double("utis_omega_log",pba->utis_omega_log);
+    class_read_double("utis_phi_log",pba->utis_phi_log);
+    class_read_double("utis_kdamp",pba->utis_kdamp);
+  }
+  /* END UTIS effective layer input read */
+
+return _SUCCESS_;
 
 }
 
@@ -6243,6 +6262,22 @@ int input_default_params(struct background *pba,
   psd->distortions_verbose = 0;
   pop->output_verbose = 0;
 
-  return _SUCCESS_;
+  
+  /* BEGIN UTIS effective layer defaults */
+  pba->has_utis = _FALSE_;
+
+  pba->utis_S0 = 0.0;
+  pba->utis_p = 1.0;
+  pba->utis_kc = 0.04;
+  pba->utis_a0 = 0.45;
+  pba->utis_width = 0.25;
+
+  pba->utis_Afeat = 0.0;
+  pba->utis_omega_log = 7.0;
+  pba->utis_phi_log = 0.0;
+  pba->utis_kdamp = 5.0;
+  /* END UTIS effective layer defaults */
+
+return _SUCCESS_;
 
 }

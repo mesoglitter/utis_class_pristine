@@ -109,6 +109,21 @@ cdef extern from "class.h":
         double z_eq
         double tau_eq
 
+
+    # BEGIN UTIS effective layer parameters
+    short has_utis
+
+    double utis_S0
+    double utis_p
+    double utis_kc
+    double utis_a0
+    double utis_width
+
+    double utis_Afeat
+    double utis_omega_log
+    double utis_phi_log
+    double utis_kdamp
+    # END UTIS effective layer parameters
     cdef struct thermodynamics:
         short is_allocated
         ErrorMsg error_message
