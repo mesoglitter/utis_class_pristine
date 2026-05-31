@@ -56,8 +56,21 @@
    NOTE: primordial_spectrum_at_k has no pba pointer.
    ============================================================ */
 
-static double utis_primordial_filter(double rk) {
+static double utis_primordial_filter(
+    struct primordial * ppm,
+    double rk
+) {
+  double Afeat = ppm->utis_Afeat;
+  double omega = ppm->utis_omega_log;
+  double phi = ppm->utis_phi_log;
+  double kdamp = ppm->utis_kdamp;
+
+  (void)Afeat;
+  (void)omega;
+  (void)phi;
+  (void)kdamp;
   (void)rk;
+
   return 1.0;
 }
 
@@ -186,7 +199,7 @@ int primordial_spectrum_at_k(
   /* BEGIN C3.1a primordial no-op */
   {
     double utis_filter_test;
-    utis_filter_test = utis_primordial_filter(rk);
+    utis_filter_test = utis_primordial_filter(ppm,rk);
     (void)utis_filter_test;
   }
   /* END C3.1a primordial no-op */
