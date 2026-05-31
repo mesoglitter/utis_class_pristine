@@ -50,6 +50,17 @@
  * @return the error status
  */
 
+
+/* ============================================================
+   UTIS primordial helper (C3.1a no-op)
+   NOTE: primordial_spectrum_at_k has no pba pointer.
+   ============================================================ */
+
+static double utis_primordial_filter(double rk) {
+  (void)rk;
+  return 1.0;
+}
+
 int primordial_spectrum_at_k(
                              struct primordial * ppm,
                              int index_md,
@@ -171,7 +182,16 @@ int primordial_spectrum_at_k(
     }
   }
 
-  return _SUCCESS_;
+  
+  /* BEGIN C3.1a primordial no-op */
+  {
+    double utis_filter_test;
+    utis_filter_test = utis_primordial_filter(rk);
+    (void)utis_filter_test;
+  }
+  /* END C3.1a primordial no-op */
+
+return _SUCCESS_;
 
 }
 
