@@ -7860,6 +7860,15 @@ int perturbations_sources(
     }
 
     /* total matter overdensity (gauge-invariant, defined as in arXiv:1307.1459) */
+
+    /* BEGIN C2.6c UTIS d_m source no-op diagnostic */
+    if (pba->has_utis == _TRUE_) {
+      double utis_mu_dm_test;
+      utis_mu_dm_test = utis_mu_of_k_a(pba,k,pvecback[pba->index_bg_a]);
+      (void)utis_mu_dm_test;
+    }
+    /* END C2.6c UTIS d_m source no-op diagnostic */
+
     if (ppt->has_source_delta_m == _TRUE_) {
       _set_source_(ppt->index_tp_delta_m) = ppw->delta_m;
     }
