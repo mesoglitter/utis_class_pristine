@@ -1751,6 +1751,18 @@ int input_read_parameters(struct file_content * pfc,
   }
   /* END UTIS effective layer input read */
 
+
+  /* BEGIN UTIS primordial input read */
+  class_read_flag("has_utis_primordial",ppm->has_utis_primordial);
+
+  if (ppm->has_utis_primordial == _TRUE_) {
+    class_read_double("utis_Afeat",ppm->utis_Afeat);
+    class_read_double("utis_omega_log",ppm->utis_omega_log);
+    class_read_double("utis_phi_log",ppm->utis_phi_log);
+    class_read_double("utis_kdamp",ppm->utis_kdamp);
+  }
+  /* END UTIS primordial input read */
+
 return _SUCCESS_;
 
 }
@@ -6277,6 +6289,15 @@ int input_default_params(struct background *pba,
   pba->utis_phi_log = 0.0;
   pba->utis_kdamp = 5.0;
   /* END UTIS effective layer defaults */
+
+
+  /* BEGIN UTIS primordial defaults */
+  ppm->has_utis_primordial = _FALSE_;
+  ppm->utis_Afeat = 0.0;
+  ppm->utis_omega_log = 7.0;
+  ppm->utis_phi_log = 0.0;
+  ppm->utis_kdamp = 5.0;
+  /* END UTIS primordial defaults */
 
 return _SUCCESS_;
 

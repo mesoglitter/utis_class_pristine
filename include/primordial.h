@@ -298,6 +298,15 @@ struct primordial {
 
   //@}
 
+
+  /* BEGIN UTIS primordial effective parameters */
+  short has_utis_primordial;
+  double utis_Afeat;
+  double utis_omega_log;
+  double utis_phi_log;
+  double utis_kdamp;
+  /* END UTIS primordial effective parameters */
+
   ErrorMsg error_message; /**< zone for writing error messages */
 
   short is_allocated; /**< flag is set to true if allocated */

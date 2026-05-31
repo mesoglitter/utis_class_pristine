@@ -421,6 +421,15 @@ cdef extern from "class.h":
         int l_unlensed_max
         ErrorMsg error_message
 
+
+        # BEGIN UTIS primordial effective parameters
+        short has_utis_primordial
+        double utis_Afeat
+        double utis_omega_log
+        double utis_phi_log
+        double utis_kdamp
+        # END UTIS primordial effective parameters
+
     cdef struct fourier:
         short is_allocated
         short has_pk_matter
