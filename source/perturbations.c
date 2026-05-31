@@ -7861,17 +7861,18 @@ int perturbations_sources(
 
     /* total matter overdensity (gauge-invariant, defined as in arXiv:1307.1459) */
 
-    /* BEGIN C2.6c UTIS d_m source no-op diagnostic */
-    if (pba->has_utis == _TRUE_) {
-      double utis_mu_dm_test;
-      utis_mu_dm_test = utis_mu_of_k_a(pba,k,pvecback[pba->index_bg_a]);
-      (void)utis_mu_dm_test;
-    }
-    /* END C2.6c UTIS d_m source no-op diagnostic */
-
+    /* BEGIN C2.6d UTIS d_m source projection */
     if (ppt->has_source_delta_m == _TRUE_) {
-      _set_source_(ppt->index_tp_delta_m) = ppw->delta_m;
+      double dm_utis = ppw->delta_m;
+
+      if (pba->has_utis == _TRUE_) {
+        double mu_utis = utis_mu_of_k_a(pba,k,pvecback[pba->index_bg_a]);
+        dm_utis = mu_utis * ppw->delta_m;
+      }
+
+      _set_source_(ppt->index_tp_delta_m) = dm_utis;
     }
+    /* END C2.6d UTIS d_m source projection */
 
     /* cdm and baryon over density */
     if (ppt->has_source_delta_cb == _TRUE_) {
