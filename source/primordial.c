@@ -65,13 +65,20 @@ static double utis_primordial_filter(
   double phi = ppm->utis_phi_log;
   double kdamp = ppm->utis_kdamp;
 
-  (void)Afeat;
-  (void)omega;
-  (void)phi;
-  (void)kdamp;
-  (void)rk;
+  double filt;
 
-  return 1.0;
+  if (Afeat == 0.0)
+    return 1.0;
+
+  filt = 1.0
+    + Afeat
+      * sin(omega * log(rk) + phi)
+      * exp(-(rk/kdamp)*(rk/kdamp));
+
+  if (filt <= 0.0)
+    filt = 1e-12;
+
+  return filt;
 }
 
 int primordial_spectrum_at_k(
@@ -196,13 +203,53 @@ int primordial_spectrum_at_k(
   }
 
   
-  /* BEGIN C3.1a primordial no-op */
-  {
-    double utis_filter_test;
-    utis_filter_test = utis_primordial_filter(ppm,exp(lnk));
-    (void)utis_filter_test;
+  /* BEGIN C3.1c primordial projection */
+
+  if (ppm->has_utis_primordial == _TRUE_) {
+
+    double utis_filter;
+    utis_filter = utis_primordial_filter(ppm,exp(lnk));
+
+    if (mode == linear) {
+
+      for (index_ic1 = 0;
+           index_ic1 < ppm->ic_size[index_md];
+           index_ic1++) {
+
+        for (index_ic2 = index_ic1;
+             index_ic2 < ppm->ic_size[index_md];
+             index_ic2++) {
+
+          index_ic1_ic2 =
+            index_symmetric_matrix(
+              index_ic1,
+              index_ic2,
+              ppm->ic_size[index_md]);
+
+          output[index_ic1_ic2] *= utis_filter;
+        }
+      }
+    }
+
+    else {
+
+      for (index_ic1 = 0;
+           index_ic1 < ppm->ic_size[index_md];
+           index_ic1++) {
+
+        index_ic1_ic2 =
+          index_symmetric_matrix(
+            index_ic1,
+            index_ic1,
+            ppm->ic_size[index_md]);
+
+        output[index_ic1_ic2]
+          += log(utis_filter);
+      }
+    }
   }
-  /* END C3.1a primordial no-op */
+
+  /* END C3.1c primordial projection */
 
 return _SUCCESS_;
 
