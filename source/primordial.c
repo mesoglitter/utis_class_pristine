@@ -199,7 +199,7 @@ int primordial_spectrum_at_k(
   /* BEGIN C3.1a primordial no-op */
   {
     double utis_filter_test;
-    utis_filter_test = utis_primordial_filter(ppm,rk);
+    utis_filter_test = utis_primordial_filter(ppm,exp(lnk));
     (void)utis_filter_test;
   }
   /* END C3.1a primordial no-op */
