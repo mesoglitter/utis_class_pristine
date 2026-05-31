@@ -14,3 +14,32 @@ RealSpaceInterface/cache/
 .DS_Store
 doc/manual/html
 doc/manual/latex
+
+
+# UTIS / CLASS build artifacts
+build/
+python/build/
+python/classy.c
+*.egg-info/
+__pycache__/
+*.pyc
+
+# Colab / checkpoints / generated outputs
+*.pkl
+*.npy
+*.npz
+*.h5
+*.hdf5
+*.fits
+*.dat
+*.png
+*.pdf
+*.zip
+*.tar
+*.tar.gz
+
+# CLASS outputs
+output/
+*.cl
+*.pk
+*.log
