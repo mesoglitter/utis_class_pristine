@@ -3352,10 +3352,30 @@ int primordial_inflation_derivs(
   dy[ppm->index_in_ksi_re]=y[ppm->index_in_dksi_re];
   // 5: ksi_im
   dy[ppm->index_in_ksi_im]=y[ppm->index_in_dksi_im];
-  // 6: d ksi_re / dtau
-  dy[ppm->index_in_dksi_re]=-(ppipaw->k*ppipaw->k-ppipaw->zpp_over_z)*y[ppm->index_in_ksi_re];
-  // 7: d ksi_im / dtau
-  dy[ppm->index_in_dksi_im]=-(ppipaw->k*ppipaw->k-ppipaw->zpp_over_z)*y[ppm->index_in_ksi_im];
+
+  /* BEGIN C4.4b-1b UTIS active Mao source scaffold */
+  {
+    double utis_width_k = 0.25;
+    double utis_aH;
+    double utis_chi_realtime;
+    double zpp_eff;
+
+    utis_aH = dy[ppm->index_in_a]/y[ppm->index_in_a];
+
+    utis_chi_realtime =
+      utis_mao_realtime(ppipaw->k,utis_aH,utis_width_k);
+
+    zpp_eff =
+      ppipaw->zpp_over_z
+      *
+      (1.0 + ppm->utis_alpha_source * utis_chi_realtime);
+
+    // 6: d ksi_re / dtau
+    dy[ppm->index_in_dksi_re]=-(ppipaw->k*ppipaw->k-zpp_eff)*y[ppm->index_in_ksi_re];
+    // 7: d ksi_im / dtau
+    dy[ppm->index_in_dksi_im]=-(ppipaw->k*ppipaw->k-zpp_eff)*y[ppm->index_in_ksi_im];
+  }
+  /* END C4.4b-1b UTIS active Mao source scaffold */
 
   // TENSORS
   // 8: ah_re
