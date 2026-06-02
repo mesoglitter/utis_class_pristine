@@ -2586,6 +2586,11 @@ int primordial_inflation_get_epsilon(
 
     (void)utis_chi_in;
     (void)utis_chi_chen;
+
+    /* BEGIN C4.2d-v1 UTIS scalar accumulator */
+    ppm->utis_chi_in_eval = utis_chi_in;
+    ppm->utis_chi_chen_eval = utis_chi_chen;
+    /* END C4.2d-v1 UTIS scalar accumulator */
   }
   /* END C4.2b UTIS In/Chen epsilon no-op */
 

@@ -307,6 +307,11 @@ struct primordial {
   double utis_kdamp;
   /* END UTIS primordial effective parameters */
 
+  
+  /* C4.2d-v1 UTIS scalar accumulators */
+  double utis_chi_in_eval;
+  double utis_chi_chen_eval;
+
   ErrorMsg error_message; /**< zone for writing error messages */
 
   short is_allocated; /**< flag is set to true if allocated */
