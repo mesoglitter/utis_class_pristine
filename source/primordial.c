@@ -1954,7 +1954,9 @@ int primordial_inflation_one_k(
       );
 
       if (utis_chi_mao_out != NULL) {
-        *utis_chi_mao_out = utis_chi_mao;
+        if (utis_chi_mao > *utis_chi_mao_out) {
+          *utis_chi_mao_out = utis_chi_mao;
+        }
       }
     }
     /* END C4.2c UTIS Mao k/aH no-op */
