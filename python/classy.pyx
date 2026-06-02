@@ -3319,6 +3319,35 @@ cdef class Class:
             "chi_mao": chi_mao_list
         }
 
+    def get_utis_phase_trackers(self):
+        cdef int index_k
+        import math
+
+        if self.pm.is_allocated == 0:
+            raise Exception("Primordial module not computed.")
+
+        k_list = []
+        phase_list = []
+        chiphase_list = []
+
+        if (
+            self.pm.lnk != NULL
+            and
+            self.pm.utis_phase_peak != NULL
+            and
+            self.pm.utis_chiphase_peak != NULL
+        ):
+            for index_k in range(self.pm.lnk_size):
+                k_list.append(math.exp(self.pm.lnk[index_k]))
+                phase_list.append(self.pm.utis_phase_peak[index_k])
+                chiphase_list.append(self.pm.utis_chiphase_peak[index_k])
+
+        return {
+            "k": k_list,
+            "phase_peak": phase_list,
+            "chiphase_peak": chiphase_list
+        }
+
     def get_utis_phase_scalars(self):
         return {
             "chi_in": self.pm.utis_chi_in_eval,

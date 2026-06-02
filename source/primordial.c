@@ -692,6 +692,8 @@ int primordial_free(
 
     if (ppm->utis_chi_mao != NULL) free(ppm->utis_chi_mao);
     if (ppm->utis_chi_mao_int != NULL) free(ppm->utis_chi_mao_int);
+    if (ppm->utis_phase_peak != NULL) free(ppm->utis_phase_peak);
+    if (ppm->utis_chiphase_peak != NULL) free(ppm->utis_chiphase_peak);
     free(ppm->lnk);
 
   }
@@ -782,11 +784,15 @@ int primordial_get_lnk_list(
   class_alloc(ppm->lnk,ppm->lnk_size*sizeof(double),ppm->error_message);
   class_alloc(ppm->utis_chi_mao,ppm->lnk_size*sizeof(double),ppm->error_message);
   class_alloc(ppm->utis_chi_mao_int,ppm->lnk_size*sizeof(double),ppm->error_message);
+  class_alloc(ppm->utis_phase_peak,ppm->lnk_size*sizeof(double),ppm->error_message);
+  class_alloc(ppm->utis_chiphase_peak,ppm->lnk_size*sizeof(double),ppm->error_message);
 
   for (i=0; i<ppm->lnk_size; i++) {
     ppm->lnk[i]=log(kmin)+i*log(10.)/k_per_decade;
     ppm->utis_chi_mao[i]=0.;
     ppm->utis_chi_mao_int[i]=0.;
+    ppm->utis_phase_peak[i]=0.;
+    ppm->utis_chiphase_peak[i]=0.;
   }
 
   return _SUCCESS_;
@@ -1757,6 +1763,8 @@ int primordial_inflation_one_wavenumber(
   double curvature,tensors;
   double utis_chi_mao_tmp = 0.;
   double utis_chi_mao_int_tmp = 0.;
+  double utis_phase_peak_tmp = 0.;
+  double utis_chiphase_peak_tmp = 0.;
   double * y;
   double * dy;
 
@@ -1797,7 +1805,9 @@ int primordial_inflation_one_wavenumber(
                                         &curvature,
                                         &tensors,
                                         &utis_chi_mao_tmp,
-                                        &utis_chi_mao_int_tmp),
+                                        &utis_chi_mao_int_tmp,
+                                        &utis_phase_peak_tmp,
+                                        &utis_chiphase_peak_tmp),
              ppm->error_message,
              ppm->error_message);
 
@@ -1822,6 +1832,12 @@ int primordial_inflation_one_wavenumber(
   }
   if (ppm->utis_chi_mao_int != NULL) {
     ppm->utis_chi_mao_int[index_k] = utis_chi_mao_int_tmp;
+  }
+  if (ppm->utis_phase_peak != NULL) {
+    ppm->utis_phase_peak[index_k] = utis_phase_peak_tmp;
+  }
+  if (ppm->utis_chiphase_peak != NULL) {
+    ppm->utis_chiphase_peak[index_k] = utis_chiphase_peak_tmp;
   }
 
   /* uncomment if you want to print here the spectra for testing */
@@ -1856,7 +1872,9 @@ int primordial_inflation_one_k(
                                double * curvature,
                                double * tensor,
                                double * utis_chi_mao_out,
-                               double * utis_chi_mao_int_out
+                               double * utis_chi_mao_int_out,
+                               double * utis_phase_peak_out,
+                               double * utis_chiphase_peak_out
                                ) {
 
   /** Summary: */
@@ -1986,6 +2004,38 @@ int primordial_inflation_one_k(
         double utis_dN = aH * dtau;
         *utis_chi_mao_int_out += utis_chi_mao * utis_dN;
       }
+
+      /* BEGIN C5.4b source tomography trackers */
+      {
+        double utis_phase;
+        double utis_phase_abs;
+        double utis_chiphase_abs;
+
+        utis_phase =
+          sin(
+            ppm->utis_omega_log
+            *
+            log(k/ppm->k_pivot)
+            +
+            ppm->utis_phi_log
+          );
+
+        utis_phase_abs = fabs(utis_phase);
+        utis_chiphase_abs = fabs(utis_chi_mao * utis_phase);
+
+        if (utis_phase_peak_out != NULL) {
+          if (utis_phase_abs > *utis_phase_peak_out) {
+            *utis_phase_peak_out = utis_phase_abs;
+          }
+        }
+
+        if (utis_chiphase_peak_out != NULL) {
+          if (utis_chiphase_abs > *utis_chiphase_peak_out) {
+            *utis_chiphase_peak_out = utis_chiphase_abs;
+          }
+        }
+      }
+      /* END C5.4b source tomography trackers */
     }
     /* END C4.2c UTIS Mao k/aH no-op */
 

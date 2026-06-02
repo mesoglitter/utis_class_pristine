@@ -339,6 +339,8 @@ cdef extern from "class.h":
         double * lnk
         double * utis_chi_mao
         double * utis_chi_mao_int
+        double * utis_phase_peak
+        double * utis_chiphase_peak
 
     cdef struct harmonic:
         short is_allocated
