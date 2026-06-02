@@ -3429,7 +3429,7 @@ int primordial_inflation_derivs(
     utis_damp =
       (ppm->utis_kdamp > 0.)
       ?
-      exp(-ppipaw->k/ppm->utis_kdamp)
+      exp(-fabs(log(ppipaw->k/ppm->k_pivot))/ppm->utis_kdamp)
       :
       1.0;
 
