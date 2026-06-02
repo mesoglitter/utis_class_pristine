@@ -81,6 +81,26 @@ static double utis_primordial_filter(
   return filt;
 }
 
+
+/* BEGIN C4.4b-0 UTIS Mao realtime helper */
+static double utis_mao_realtime(
+                       double k,
+                       double aH,
+                       double width
+                       ) {
+
+  double x;
+
+  if ((k <= 0.) || (aH <= 0.) || (width <= 0.))
+    return 0.;
+
+  x = log(k/aH);
+
+  return exp(-0.5*x*x/(width*width));
+}
+/* END C4.4b-0 UTIS Mao realtime helper */
+
+
 int primordial_spectrum_at_k(
                              struct primordial * ppm,
                              int index_md,
@@ -1951,16 +1971,9 @@ int primordial_inflation_one_k(
     /* BEGIN C4.2c UTIS Mao k/aH no-op */
     {
       double utis_width_k = 0.25;
-      double utis_x_mao;
       double utis_chi_mao;
 
-      utis_x_mao = log(k/aH);
-      utis_chi_mao = exp(
-        -0.5 *
-        utis_x_mao *
-        utis_x_mao /
-        (utis_width_k*utis_width_k)
-      );
+      utis_chi_mao = utis_mao_realtime(k,aH,utis_width_k);
 
       if (utis_chi_mao_out != NULL) {
         if (utis_chi_mao > *utis_chi_mao_out) {
