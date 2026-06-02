@@ -3279,6 +3279,26 @@ cdef class Class:
         free(data)
         return thermodynamics
 
+    def get_utis_mao_integral(self):
+        cdef int index_k
+        import math
+
+        if self.pm.is_allocated == 0:
+            raise Exception("Primordial module not computed.")
+
+        k_list = []
+        chi_int_list = []
+
+        if self.pm.lnk != NULL and self.pm.utis_chi_mao_int != NULL:
+            for index_k in range(self.pm.lnk_size):
+                k_list.append(math.exp(self.pm.lnk[index_k]))
+                chi_int_list.append(self.pm.utis_chi_mao_int[index_k])
+
+        return {
+            "k": k_list,
+            "chi_mao_int": chi_int_list
+        }
+
     def get_utis_mao_trackers(self):
         cdef int index_k
         import math

@@ -312,6 +312,7 @@ struct primordial {
   double utis_chi_in_eval;
   double utis_chi_chen_eval;
   double * utis_chi_mao;
+  double * utis_chi_mao_int;
 
   ErrorMsg error_message; /**< zone for writing error messages */
 
@@ -455,7 +456,8 @@ extern "C" {
                                  double * dy,
                                  double * curvature,
                                  double * tensor,
-                                 double * utis_chi_mao_out
+                                 double * utis_chi_mao_out,
+                                 double * utis_chi_mao_int_out
                                  );
 
   int primordial_inflation_find_attractor(

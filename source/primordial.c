@@ -671,6 +671,7 @@ int primordial_free(
     free(ppm->ic_ic_size);
 
     if (ppm->utis_chi_mao != NULL) free(ppm->utis_chi_mao);
+    if (ppm->utis_chi_mao_int != NULL) free(ppm->utis_chi_mao_int);
     free(ppm->lnk);
 
   }
@@ -760,10 +761,12 @@ int primordial_get_lnk_list(
 
   class_alloc(ppm->lnk,ppm->lnk_size*sizeof(double),ppm->error_message);
   class_alloc(ppm->utis_chi_mao,ppm->lnk_size*sizeof(double),ppm->error_message);
+  class_alloc(ppm->utis_chi_mao_int,ppm->lnk_size*sizeof(double),ppm->error_message);
 
   for (i=0; i<ppm->lnk_size; i++) {
     ppm->lnk[i]=log(kmin)+i*log(10.)/k_per_decade;
     ppm->utis_chi_mao[i]=0.;
+    ppm->utis_chi_mao_int[i]=0.;
   }
 
   return _SUCCESS_;
@@ -1733,6 +1736,7 @@ int primordial_inflation_one_wavenumber(
   double k;
   double curvature,tensors;
   double utis_chi_mao_tmp = 0.;
+  double utis_chi_mao_int_tmp = 0.;
   double * y;
   double * dy;
 
@@ -1772,7 +1776,8 @@ int primordial_inflation_one_wavenumber(
                                         dy,
                                         &curvature,
                                         &tensors,
-                                        &utis_chi_mao_tmp),
+                                        &utis_chi_mao_tmp,
+                                        &utis_chi_mao_int_tmp),
              ppm->error_message,
              ppm->error_message);
 
@@ -1794,6 +1799,9 @@ int primordial_inflation_one_wavenumber(
   /* C4.2f UTIS Mao accumulator */
   if (ppm->utis_chi_mao != NULL) {
     ppm->utis_chi_mao[index_k] = utis_chi_mao_tmp;
+  }
+  if (ppm->utis_chi_mao_int != NULL) {
+    ppm->utis_chi_mao_int[index_k] = utis_chi_mao_int_tmp;
   }
 
   /* uncomment if you want to print here the spectra for testing */
@@ -1827,7 +1835,8 @@ int primordial_inflation_one_k(
                                double * dy,
                                double * curvature,
                                double * tensor,
-                               double * utis_chi_mao_out
+                               double * utis_chi_mao_out,
+                               double * utis_chi_mao_int_out
                                ) {
 
   /** Summary: */
@@ -1957,6 +1966,12 @@ int primordial_inflation_one_k(
         if (utis_chi_mao > *utis_chi_mao_out) {
           *utis_chi_mao_out = utis_chi_mao;
         }
+      }
+
+      /* C4.2i Mao integral accumulator */
+      if (utis_chi_mao_int_out != NULL) {
+        double utis_dN = aH * dtau;
+        *utis_chi_mao_int_out += utis_chi_mao * utis_dN;
       }
     }
     /* END C4.2c UTIS Mao k/aH no-op */
