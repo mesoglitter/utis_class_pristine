@@ -1926,7 +1926,26 @@ int primordial_inflation_one_k(
     /* variation of curvature with time (dimensionless) */
     dlnPdN = (curvature_new-curvature_old)/dtau*y[ppm->index_in_a]/dy[ppm->index_in_a]/curvature_new;
 
-    /* stop when (k >> aH) AND curvature is stable */
+    
+    /* BEGIN C4.2c UTIS Mao k/aH no-op */
+    {
+      double utis_width_k = 0.25;
+      double utis_x_mao;
+      double utis_chi_mao;
+
+      utis_x_mao = log(k/aH);
+      utis_chi_mao = exp(
+        -0.5 *
+        utis_x_mao *
+        utis_x_mao /
+        (utis_width_k*utis_width_k)
+      );
+
+      (void)utis_chi_mao;
+    }
+    /* END C4.2c UTIS Mao k/aH no-op */
+
+/* stop when (k >> aH) AND curvature is stable */
   } while ((k/aH >= ppr->primordial_inflation_ratio_max) || (fabs(dlnPdN) > ppr->primordial_inflation_tol_curvature));
 
   /** - clean the generic integrator */
