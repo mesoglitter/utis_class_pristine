@@ -670,6 +670,7 @@ int primordial_free(
     free(ppm->ic_size);
     free(ppm->ic_ic_size);
 
+    if (ppm->utis_chi_mao != NULL) free(ppm->utis_chi_mao);
     free(ppm->lnk);
 
   }
@@ -758,9 +759,12 @@ int primordial_get_lnk_list(
   ppm->lnk_size = (int)(log(kmax/kmin)/log(10.)*k_per_decade) + 2;
 
   class_alloc(ppm->lnk,ppm->lnk_size*sizeof(double),ppm->error_message);
+  class_alloc(ppm->utis_chi_mao,ppm->lnk_size*sizeof(double),ppm->error_message);
 
-  for (i=0; i<ppm->lnk_size; i++)
+  for (i=0; i<ppm->lnk_size; i++) {
     ppm->lnk[i]=log(kmin)+i*log(10.)/k_per_decade;
+    ppm->utis_chi_mao[i]=0.;
+  }
 
   return _SUCCESS_;
 
@@ -1728,6 +1732,7 @@ int primordial_inflation_one_wavenumber(
                                         ) {
   double k;
   double curvature,tensors;
+  double utis_chi_mao_tmp = 0.;
   double * y;
   double * dy;
 
@@ -1766,7 +1771,8 @@ int primordial_inflation_one_wavenumber(
                                         y,
                                         dy,
                                         &curvature,
-                                        &tensors),
+                                        &tensors,
+                                        &utis_chi_mao_tmp),
              ppm->error_message,
              ppm->error_message);
 
@@ -1784,6 +1790,11 @@ int primordial_inflation_one_wavenumber(
   /** - store the obtained result for curvature and tensor perturbations */
   ppm->lnpk[ppt->index_md_scalars][index_k] = log(curvature);
   ppm->lnpk[ppt->index_md_tensors][index_k] = log(tensors);
+
+  /* C4.2f UTIS Mao accumulator */
+  if (ppm->utis_chi_mao != NULL) {
+    ppm->utis_chi_mao[index_k] = utis_chi_mao_tmp;
+  }
 
   /* uncomment if you want to print here the spectra for testing */
   /* fprintf(stderr,"%e %e %e\n", */
@@ -1815,7 +1826,8 @@ int primordial_inflation_one_k(
                                double * y,
                                double * dy,
                                double * curvature,
-                               double * tensor
+                               double * tensor,
+                               double * utis_chi_mao_out
                                ) {
 
   /** Summary: */
@@ -1941,7 +1953,9 @@ int primordial_inflation_one_k(
         (utis_width_k*utis_width_k)
       );
 
-      (void)utis_chi_mao;
+      if (utis_chi_mao_out != NULL) {
+        *utis_chi_mao_out = utis_chi_mao;
+      }
     }
     /* END C4.2c UTIS Mao k/aH no-op */
 

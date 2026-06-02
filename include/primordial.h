@@ -311,6 +311,7 @@ struct primordial {
   /* C4.2d-v1 UTIS scalar accumulators */
   double utis_chi_in_eval;
   double utis_chi_chen_eval;
+  double * utis_chi_mao;
 
   ErrorMsg error_message; /**< zone for writing error messages */
 
@@ -453,7 +454,8 @@ extern "C" {
                                  double * y,
                                  double * dy,
                                  double * curvature,
-                                 double * tensor
+                                 double * tensor,
+                                 double * utis_chi_mao_out
                                  );
 
   int primordial_inflation_find_attractor(
