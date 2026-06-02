@@ -2555,7 +2555,22 @@ int primordial_inflation_get_epsilon(
     break;
   }
 
-  return _SUCCESS_;
+  
+  /* BEGIN C4.2b UTIS In/Chen epsilon no-op */
+  {
+    double utis_width = 0.05;
+    double utis_chi_in;
+    double utis_chi_chen;
+
+    utis_chi_in = 0.5 * (1.0 - tanh((*epsilon - 1.0)/utis_width));
+    utis_chi_chen = 0.5 * (1.0 + tanh((*epsilon - 1.0)/utis_width));
+
+    (void)utis_chi_in;
+    (void)utis_chi_chen;
+  }
+  /* END C4.2b UTIS In/Chen epsilon no-op */
+
+return _SUCCESS_;
 }
 
 /**
