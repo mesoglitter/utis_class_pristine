@@ -3279,6 +3279,12 @@ cdef class Class:
         free(data)
         return thermodynamics
 
+    def get_utis_phase_scalars(self):
+        return {
+            "chi_in": self.pm.utis_chi_in_eval,
+            "chi_chen": self.pm.utis_chi_chen_eval
+        }
+
     def get_primordial(self):
         """
         Return primordial spectra

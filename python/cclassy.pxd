@@ -304,6 +304,9 @@ cdef extern from "class.h":
 
     cdef struct primordial:
         short is_allocated
+        double utis_chi_in_eval
+        double utis_chi_chen_eval
+
         ErrorMsg error_message
         double k_pivot
         double A_s
