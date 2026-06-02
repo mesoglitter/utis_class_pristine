@@ -1760,6 +1760,7 @@ int input_read_parameters(struct file_content * pfc,
     class_read_double("utis_omega_log",ppm->utis_omega_log);
     class_read_double("utis_phi_log",ppm->utis_phi_log);
     class_read_double("utis_kdamp",ppm->utis_kdamp);
+    class_read_double("utis_alpha_source",ppm->utis_alpha_source);
   }
   /* END UTIS primordial input read */
 
@@ -6297,6 +6298,7 @@ int input_default_params(struct background *pba,
   ppm->utis_omega_log = 7.0;
   ppm->utis_phi_log = 0.0;
   ppm->utis_kdamp = 5.0;
+  ppm->utis_alpha_source = 0.0;
   /* END UTIS primordial defaults */
 
 return _SUCCESS_;

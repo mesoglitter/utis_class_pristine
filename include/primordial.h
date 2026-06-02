@@ -305,6 +305,7 @@ struct primordial {
   double utis_omega_log;
   double utis_phi_log;
   double utis_kdamp;
+  double utis_alpha_source;
   /* END UTIS primordial effective parameters */
 
   
