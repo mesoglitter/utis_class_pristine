@@ -336,6 +336,8 @@ cdef extern from "class.h":
         double phi_min
         double phi_max
         int lnk_size
+        double * lnk
+        double * utis_chi_mao
 
     cdef struct harmonic:
         short is_allocated
