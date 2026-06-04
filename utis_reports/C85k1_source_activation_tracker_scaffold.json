@@ -1,0 +1,11 @@
+{
+  "stage": "C8.5k-1 source activation tracker scaffold",
+  "checks": {
+    "has_activation_tracker": true,
+    "tracker_uses_phi_accum": true,
+    "source_from_phi_uses_tracker": true,
+    "tracker_before_source": true,
+    "true_noop": true
+  },
+  "OVERALL_PASS": true
+}

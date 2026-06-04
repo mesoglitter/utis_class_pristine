@@ -1,0 +1,23 @@
+{
+  "stage": "C8.5k-1 source activation tracker scaffold build runtime",
+  "lcdm": {
+    "sigma8": 0.8222012166542328,
+    "h": 0.6736,
+    "Omega_m": 0.31377210267376066,
+    "S8": 0.8408618554692793
+  },
+  "utis_noop": {
+    "sigma8": 0.8222012166542328,
+    "h": 0.6736,
+    "Omega_m": 0.31377210267376066,
+    "S8": 0.8408618554692793
+  },
+  "deltas": {
+    "delta_sigma8": 0.0,
+    "delta_h": 0.0,
+    "delta_Omega_m": 0.0,
+    "delta_S8": 0.0
+  },
+  "equivalence_pass": true,
+  "OVERALL_PASS": true
+}

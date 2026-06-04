@@ -458,9 +458,14 @@ int background_functions(
   /* END UTIS C8.5i ghost inflaton accumulator */
 
 
+  /* BEGIN UTIS C8.5k-1 source activation tracker */
+  double utis_source_activation_tracker =
+    0.0 * utis_rho_phi_accum_effective;
+  /* END UTIS C8.5k-1 source activation tracker */
+
   /* BEGIN UTIS C8.5j-2 source route scaffold: true no-op */
   double utis_reheat_source_from_phi =
-    0.0 * utis_rho_phi_accum_effective;
+    0.0 * utis_source_activation_tracker;
   /* END UTIS C8.5j-2 source route scaffold */
 
   double utis_reheat_factor_effective =
