@@ -456,6 +456,13 @@ int background_functions(
     * exp(-utis_phi_decay_rate_scaffold * a);
   /* END UTIS C8.5h-2 ghost inflaton scaffold */
 
+
+  /* BEGIN UTIS C8.5i ghost inflaton accumulator */
+  double utis_rho_phi_accum_effective =
+    utis_rho_phi_effective;
+  /* END UTIS C8.5i ghost inflaton accumulator */
+
+
   pvecback[pba->index_bg_rho_g] =
     utis_reheat_factor_effective
     * pba->Omega0_g
@@ -582,7 +589,7 @@ int background_functions(
     0.0
     * utis_Gamma_phi_scaffold
     * pvecback[pba->index_bg_H]
-    * utis_rho_phi_effective;
+    * utis_rho_phi_accum_effective;
 
   double utis_Q_freezeout_tracker =
     0.0;

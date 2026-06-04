@@ -1,0 +1,12 @@
+{
+  "stage": "C8.5i ghost inflaton accumulator scaffold fixed",
+  "checks": {
+    "has_accumulator": true,
+    "Q_reheat_uses_accumulator": true,
+    "Q_reheat_no_direct_phi": true,
+    "rho_phi_before_rho_g": true,
+    "accumulator_before_rho_g": true,
+    "true_noop_kept": true
+  },
+  "OVERALL_PASS": true
+}
