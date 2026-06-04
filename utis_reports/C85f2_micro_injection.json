@@ -1,0 +1,10 @@
+{
+  "stage": "C8.5f-2 micro injection",
+  "compute_pass": true,
+  "utis_reheat_source_amp": 1e-08,
+  "sigma8": 0.8222011607028741,
+  "h": 0.6736,
+  "Omega_m": 0.3137721026735896,
+  "S8": 0.840861798247822,
+  "PASS": true
+}
