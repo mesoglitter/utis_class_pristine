@@ -1748,6 +1748,9 @@ int input_read_parameters(struct file_content * pfc,
     class_read_double("utis_omega_log",pba->utis_omega_log);
     class_read_double("utis_phi_log",pba->utis_phi_log);
     class_read_double("utis_kdamp",pba->utis_kdamp);
+
+    class_read_double("utis_reheat_factor",pba->utis_reheat_factor);
+    class_read_double("utis_reheat_accum",pba->utis_reheat_accum);
   }
   /* END UTIS effective layer input read */
 
@@ -6289,6 +6292,9 @@ int input_default_params(struct background *pba,
   pba->utis_omega_log = 7.0;
   pba->utis_phi_log = 0.0;
   pba->utis_kdamp = 5.0;
+
+  pba->utis_reheat_factor = 1.0;
+  pba->utis_reheat_accum = 0.0;
   /* END UTIS effective layer defaults */
 
 

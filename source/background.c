@@ -422,7 +422,20 @@ int background_functions(
   /** - compute each component's density and pressure */
 
   /* photons */
-  pvecback[pba->index_bg_rho_g] = pba->Omega0_g * pow(pba->H0,2) / pow(a,4);
+  double utis_reheat_tracker = a; /* C8.5e-3 tracker */
+
+  double utis_reheat_accum_effective =
+    pba->utis_reheat_accum + 0.0 * utis_reheat_tracker;
+
+  double utis_reheat_factor_effective =
+    pba->utis_reheat_factor
+    + utis_reheat_accum_effective;
+
+  pvecback[pba->index_bg_rho_g] =
+    utis_reheat_factor_effective
+    * pba->Omega0_g
+    * pow(pba->H0,2)
+    / pow(a,4);
   rho_tot += pvecback[pba->index_bg_rho_g];
   p_tot += (1./3.) * pvecback[pba->index_bg_rho_g];
   dp_dloga += -(4./3.) * pvecback[pba->index_bg_rho_g];

@@ -353,6 +353,12 @@ struct background
 
   /** UTIS high-k damping scale for primordial feature. */
   double utis_kdamp;
+
+  /** UTIS reheating scaffold factor. Default 1.0 = true no-op. */
+  double utis_reheat_factor;
+
+  /** UTIS reheating accumulator. Default 0.0 = inactive no-op. */
+  double utis_reheat_accum;
   /* END UTIS effective layer parameters */
 
   ErrorMsg error_message; /**< zone for writing error messages */
