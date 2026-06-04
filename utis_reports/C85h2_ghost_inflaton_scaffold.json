@@ -1,0 +1,15 @@
+{
+  "stage": "C8.5h-2 ghost inflaton scaffold",
+  "checks": {
+    "ghost_begin": true,
+    "rho_phi0": true,
+    "phi_decay": true,
+    "rho_phi_effective": true,
+    "exp_decay": true,
+    "gamma_phi": true,
+    "Q_reheat_uses_phi": true,
+    "rho_phi_before_rho_g": true,
+    "true_noop": true
+  },
+  "OVERALL_PASS": true
+}

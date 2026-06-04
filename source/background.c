@@ -441,6 +441,21 @@ int background_functions(
     + utis_reheat_accum_effective
     + utis_reheat_source_effective;
 
+  /* BEGIN UTIS C8.5h-2 ghost inflaton scaffold: true no-op */
+  double utis_rho_phi0_scaffold =
+    1.0;
+
+  double utis_phi_decay_rate_scaffold =
+    1.0;
+
+  double utis_rho_phi_effective =
+    0.0
+    * utis_rho_phi0_scaffold
+    * pow(pba->H0,2)
+    / pow(a,3)
+    * exp(-utis_phi_decay_rate_scaffold * a);
+  /* END UTIS C8.5h-2 ghost inflaton scaffold */
+
   pvecback[pba->index_bg_rho_g] =
     utis_reheat_factor_effective
     * pba->Omega0_g
@@ -560,8 +575,14 @@ int background_functions(
   }
 
   /* BEGIN UTIS C8.5g-1 conservation Q-sum tracker: true no-op */
+  double utis_Gamma_phi_scaffold =
+    1.0;
+
   double utis_Q_reheat_tracker =
-    0.0;
+    0.0
+    * utis_Gamma_phi_scaffold
+    * pvecback[pba->index_bg_H]
+    * utis_rho_phi_effective;
 
   double utis_Q_freezeout_tracker =
     0.0;
