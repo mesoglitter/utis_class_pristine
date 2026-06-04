@@ -1,0 +1,14 @@
+{
+  "stage": "C8.5g-2 independent Q tracker scaffold",
+  "checks": {
+    "Q_reheat_tracker": true,
+    "Q_freezeout_tracker": true,
+    "Q_collapse_tracker": true,
+    "Q_bounce_tracker": true,
+    "Q_reheat_uses_tracker": true,
+    "Q_freezeout_uses_tracker": true,
+    "Q_collapse_uses_tracker": true,
+    "Q_bounce_uses_tracker": true
+  },
+  "OVERALL_PASS": true
+}

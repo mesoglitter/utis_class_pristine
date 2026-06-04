@@ -560,17 +560,29 @@ int background_functions(
   }
 
   /* BEGIN UTIS C8.5g-1 conservation Q-sum tracker: true no-op */
-  double utis_Q_reheat =
+  double utis_Q_reheat_tracker =
     0.0;
+
+  double utis_Q_freezeout_tracker =
+    0.0;
+
+  double utis_Q_collapse_tracker =
+    0.0;
+
+  double utis_Q_bounce_tracker =
+    0.0;
+
+  double utis_Q_reheat =
+    utis_Q_reheat_tracker;
 
   double utis_Q_freezeout =
-    0.0;
+    utis_Q_freezeout_tracker;
 
   double utis_Q_collapse =
-    0.0;
+    utis_Q_collapse_tracker;
 
   double utis_Q_bounce =
-    0.0;
+    utis_Q_bounce_tracker;
 
   double utis_Q_sum =
     (-utis_Q_reheat + utis_Q_bounce)
