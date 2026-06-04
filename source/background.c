@@ -427,9 +427,19 @@ int background_functions(
   double utis_reheat_accum_effective =
     pba->utis_reheat_accum + 0.0 * utis_reheat_tracker;
 
+  double utis_reheat_gate =
+    0.5 * (1.0 + tanh(log(utis_reheat_tracker / pba->utis_reheat_source_a0)
+                     / pba->utis_reheat_source_width));
+
+  double utis_reheat_source_effective =
+    (pba->has_utis == _TRUE_)
+    ? pba->utis_reheat_source_amp * utis_reheat_gate
+    : 0.0;
+
   double utis_reheat_factor_effective =
     pba->utis_reheat_factor
-    + utis_reheat_accum_effective;
+    + utis_reheat_accum_effective
+    + utis_reheat_source_effective;
 
   pvecback[pba->index_bg_rho_g] =
     utis_reheat_factor_effective
