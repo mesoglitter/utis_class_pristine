@@ -559,6 +559,30 @@ int background_functions(
     p_tot -= pvecback[pba->index_bg_rho_lambda];
   }
 
+  /* BEGIN UTIS C8.5g-1 conservation Q-sum tracker: true no-op */
+  double utis_Q_reheat =
+    0.0;
+
+  double utis_Q_freezeout =
+    0.0;
+
+  double utis_Q_collapse =
+    0.0;
+
+  double utis_Q_bounce =
+    0.0;
+
+  double utis_Q_sum =
+    (-utis_Q_reheat + utis_Q_bounce)
+    + (utis_Q_reheat - utis_Q_freezeout)
+    + (utis_Q_freezeout - utis_Q_collapse)
+    + (utis_Q_collapse - utis_Q_bounce);
+
+  class_test(fabs(utis_Q_sum) > 1.e-13,
+             pba->error_message,
+             "UTIS conservation Q-sum violation: %e",utis_Q_sum);
+  /* END UTIS C8.5g-1 conservation Q-sum tracker: true no-op */
+
   /* fluid with w(a) and constant cs2 */
   if (pba->has_fld == _TRUE_) {
 

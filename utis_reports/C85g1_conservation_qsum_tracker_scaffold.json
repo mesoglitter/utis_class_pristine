@@ -1,0 +1,15 @@
+{
+  "stage": "C8.5g-1 conservation Q-sum tracker scaffold",
+  "checks": {
+    "has_begin_marker": true,
+    "has_Q_reheat": true,
+    "has_Q_freezeout": true,
+    "has_Q_collapse": true,
+    "has_Q_bounce": true,
+    "has_Q_sum": true,
+    "has_conservation_identity": true,
+    "has_class_test": true,
+    "before_fluid_block": true
+  },
+  "OVERALL_PASS": true
+}
