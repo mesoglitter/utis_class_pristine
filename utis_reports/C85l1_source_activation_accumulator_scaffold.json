@@ -1,0 +1,11 @@
+{
+  "stage": "C8.5l-1 source activation accumulator scaffold",
+  "checks": {
+    "has_activation_accum": true,
+    "accum_uses_tracker": true,
+    "source_from_phi_uses_accum": true,
+    "accum_before_source": true,
+    "true_noop": true
+  },
+  "OVERALL_PASS": true
+}

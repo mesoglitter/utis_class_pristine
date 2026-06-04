@@ -463,9 +463,14 @@ int background_functions(
     0.0 * utis_rho_phi_accum_effective;
   /* END UTIS C8.5k-1 source activation tracker */
 
+  /* BEGIN UTIS C8.5l-1 source activation accumulator */
+  double utis_source_activation_accum =
+    0.0 * utis_source_activation_tracker;
+  /* END UTIS C8.5l-1 source activation accumulator */
+
   /* BEGIN UTIS C8.5j-2 source route scaffold: true no-op */
   double utis_reheat_source_from_phi =
-    0.0 * utis_source_activation_tracker;
+    0.0 * utis_source_activation_accum;
   /* END UTIS C8.5j-2 source route scaffold */
 
   double utis_reheat_factor_effective =
