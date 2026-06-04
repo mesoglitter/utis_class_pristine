@@ -1751,6 +1751,10 @@ int input_read_parameters(struct file_content * pfc,
 
     class_read_double("utis_reheat_factor",pba->utis_reheat_factor);
     class_read_double("utis_reheat_accum",pba->utis_reheat_accum);
+
+    class_read_double("utis_reheat_source_amp",pba->utis_reheat_source_amp);
+    class_read_double("utis_reheat_source_a0",pba->utis_reheat_source_a0);
+    class_read_double("utis_reheat_source_width",pba->utis_reheat_source_width);
   }
   /* END UTIS effective layer input read */
 
@@ -6295,6 +6299,10 @@ int input_default_params(struct background *pba,
 
   pba->utis_reheat_factor = 1.0;
   pba->utis_reheat_accum = 0.0;
+
+  pba->utis_reheat_source_amp = 0.0;
+  pba->utis_reheat_source_a0 = 1.0e-20;
+  pba->utis_reheat_source_width = 1.0;
   /* END UTIS effective layer defaults */
 
 

@@ -359,6 +359,16 @@ struct background
 
   /** UTIS reheating accumulator. Default 0.0 = inactive no-op. */
   double utis_reheat_accum;
+
+
+  /** UTIS reheating active source amplitude. Default 0.0 = true no-op. */
+  double utis_reheat_source_amp;
+
+  /** UTIS reheating active source center in scale factor. */
+  double utis_reheat_source_a0;
+
+  /** UTIS reheating active source width in log(a). */
+  double utis_reheat_source_width;
   /* END UTIS effective layer parameters */
 
   ErrorMsg error_message; /**< zone for writing error messages */
