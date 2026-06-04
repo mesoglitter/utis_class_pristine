@@ -436,11 +436,6 @@ int background_functions(
     ? pba->utis_reheat_source_amp * utis_reheat_gate
     : 0.0;
 
-  double utis_reheat_factor_effective =
-    pba->utis_reheat_factor
-    + utis_reheat_accum_effective
-    + utis_reheat_source_effective;
-
   /* BEGIN UTIS C8.5h-2 ghost inflaton scaffold: true no-op */
   double utis_rho_phi0_scaffold =
     1.0;
@@ -461,6 +456,19 @@ int background_functions(
   double utis_rho_phi_accum_effective =
     utis_rho_phi_effective;
   /* END UTIS C8.5i ghost inflaton accumulator */
+
+
+  /* BEGIN UTIS C8.5j-2 source route scaffold: true no-op */
+  double utis_reheat_source_from_phi =
+    0.0 * utis_rho_phi_accum_effective;
+  /* END UTIS C8.5j-2 source route scaffold */
+
+  double utis_reheat_factor_effective =
+    pba->utis_reheat_factor
+    + utis_reheat_accum_effective
+    + utis_reheat_source_effective
+    + utis_reheat_source_from_phi;
+
 
 
   pvecback[pba->index_bg_rho_g] =

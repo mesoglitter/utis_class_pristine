@@ -1,0 +1,11 @@
+{
+  "stage": "C8.5j-2 source route scaffold reorder",
+  "checks": {
+    "has_source_from_phi": true,
+    "uses_phi_accum": true,
+    "source_effective_linked": true,
+    "link_after_source": true,
+    "true_noop": true
+  },
+  "OVERALL_PASS": true
+}
